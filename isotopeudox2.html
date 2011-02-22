@@ -44,31 +44,71 @@
   
 </head>
 <body>
-<ul id="filters">
-  <li><a href="#" data-filter="*">show all</a></li>
-  <li><a href="#" data-filter=".metal">metal</a></li>
-  <li><a href="#" data-filter=".transition">transition</a></li>
-  <li><a href="#" data-filter=".alkali, .alkaline-earth">alkali and alkaline-earth</a></li>
-  <li><a href="#" data-filter=":not(.transition)">not transition</a></li>
-  <li><a href="#" data-filter=".metal:not(.transition)">metal but not transition</a></li>
+  <section id="options" class="clearfix">
+  
+<ul id="filters" class="option-set floated clearfix">
+  <li><a href="#showall" data-filter="*">show all</a></li>
+  <li><a href="#metal" data-filter=".metal">metal</a></li>
+  <li><a href="#transition" data-filter=".transition">transition</a></li>
+  <li><a href="#alkaliandalkalineearth" data-filter=".alkali, .alkaline-earth">alkali and alkaline-earth</a></li>
+  <li><a href="#nottransition" data-filter=":not(.transition)">not transition</a></li>
+  <li><a href="#metalbutnottransition" data-filter=".metal:not(.transition)">metal but not transition</a></li>
 </ul>
-<ul id="container">
-  <li class="element transition metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict" style="margin-top: 6px; margin-right: 0px; margin-bottom: 0px; margin-left: 6px; "></li>
-  <li class="element post-transition metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict" style="margin-top: 6px; margin-right: 0px; margin-bottom: 0px; margin-left: 6px; "></li>
-  <li class="element alkali metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict" style="margin-top: 6px; margin-right: 0px; margin-bottom: 0px; margin-left: 6px; "></li>
-  <li class="element transition metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict" style="margin-top: 6px; margin-right: 0px; margin-bottom: 0px; margin-left: 6px; "></li>
-  <li class="element lanthanoid metal inner-transition"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict" style="margin-top: 6px; margin-right: 0px; margin-bottom: 0px; margin-left: 6px; "></li> 
-  <li class="element halogen nonmetal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict" style="margin-top: 6px; margin-right: 0px; margin-bottom: 0px; margin-left: 6px; "></li> 
-  <li class="element alkaline-earth metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict" style="margin-top: 6px; margin-right: 0px; margin-bottom: 0px; margin-left: 6px; "></li>
+
+</section>
+
+<ul id="container" class="fitRows clearfix">
+  <li class="element transition metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict""></li>
+  <li class="element post-transition metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict""></li>
+  <li class="element alkali metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict""></li>
+  <li class="element transition metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict""></li>
+  <li class="element lanthanoid metal inner-transition"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict""></li> 
+  <li class="element halogen nonmetal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict""></li> 
+  <li class="element alkaline-earth metal"><img src="http://www.u-dox.com/media/uploads/portfollio/tiles/sneakeraddict_sq00_1_2.jpg" alt="Foot Locker - Sneaker Addict""></li>
 </ul>
+
   <script src="js/jquery-1.4.4.min.js"></script>
   <script src="jquery.isotope.min.js"></script>
   <script>
+  $list = $('#container');
+  
   $('#filters a').click(function(){
   var selector = $(this).attr('data-filter');
-  $('#container').isotope({ filter: selector });
+  $list.isotope({ filter: selector });
   return false;
 });
+    
+      // switches selected class on buttons
+      $('#options').find('.option-set a').click(function(){
+        var $this = $(this);
+
+        // don't proceed if already selected
+        if ( !$this.hasClass('selected') ) {
+          $this.parents('.option-set').find('.selected').removeClass('selected');
+          $this.addClass('selected');
+        }
+
+      });
+	  
+
+    $(function(){
+      
+      $list.isotope({
+        layoutMode : 'fitRows',
+        masonry : {
+          columnWidth: 220
+        },
+        getSortData : {
+          related : function( $elem ) {
+            return $elem.attr('data-related');
+          },
+          width : function( $elem ) {
+            return $elem.width();
+          }
+        }
+      });
+      
+    });
 </script>
 </body>
 </html>
